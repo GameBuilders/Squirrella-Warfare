@@ -7,6 +7,6 @@ public class ProjectileMovement : MonoBehaviour
 
 	void Start ()
     {
-        GetComponent<Rigidbody>().velocity = transform.forward * linearSpeed;
+        GetComponent<Rigidbody>().velocity = transform.forward * linearSpeed * Time.deltaTime;
 	}
 }
