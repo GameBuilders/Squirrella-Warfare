@@ -24,8 +24,6 @@ public class Movement : MonoBehaviour {
 		playerRigidbody = GetComponent<Rigidbody>();
 		currentlyColliding = new HashSet<Collider>();
 		currentTree = null;
-
-		Screen.lockCursor = true;
 	}
 
 	private void FixedUpdate() {
