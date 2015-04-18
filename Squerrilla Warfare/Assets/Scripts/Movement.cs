@@ -1,42 +1,32 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
-[UsedImplicitly] public class Squirrell : MonoBehaviour {
-
+public class Movement : MonoBehaviour {
 	public const float SPEED = 6f;
 	public const float JUMP_HEIGHT = 10f;
 	public const float CLIMB_SPEED = 2f;
+
 	Vector3 movement;
 
 	Collider currentTree;
 	HashSet<Collider> currentlyColliding;
 
+	//private Animator anim;
 	private Rigidbody playerRigidbody;
 	private int floorMask;
 	private float camRayLength = 100f;
 
 	float h, v;
 
-	[UsedImplicitly] void Start () {
-		rigidBody = GetComponent<Rigidbody>();
-		rigidBody.freezeRotation = true;
-		networkView = GetComponent<NetworkView>();
-
+	void Awake() {
+		floorMask = LayerMask.GetMask("Floor");
+		//anim = GetComponent<Animator>();
 		playerRigidbody = GetComponent<Rigidbody>();
 		currentlyColliding = new HashSet<Collider>();
 		currentTree = null;
-
-		Screen.lockCursor = true;
 	}
-	[UsedImplicitly] void Update () {
-		if (networkView.isMine)
-			InputMovement();
-	}
-	Rigidbody rigidBody;
-	new NetworkView networkView;
-	void InputMovement () {
 
+	private void FixedUpdate() {
 		h = Input.GetAxis("Horizontal");
 		v = Input.GetAxis("Vertical");
 
@@ -48,19 +38,18 @@ using JetBrains.Annotations;
 			}
 			Move();
 		}
-
+		
 		Turning();
-
 	}
 
-	void OnCollisionEnter(Collision collision) {
+	void OnCollisionEnter (Collision collision) {
 		string tag = collision.collider.gameObject.tag;
 		if (tag == "Ground" || tag == "Tree") {
 			currentlyColliding.Add(collision.collider);
 		}
 	}
 
-	void OnCollisionStay(Collision collision) {
+	void OnCollisionStay (Collision collision) {
 		if (collision.collider == currentTree) {
 			if (!WantsClimbing()) {
 				currentTree = null;
@@ -78,9 +67,9 @@ using JetBrains.Annotations;
 		}
 	}
 
-	bool WantsClimbing() { return Input.GetKey(KeyCode.LeftShift) && v > 0.5; }
+	bool WantsClimbing() {return Input.GetKey(KeyCode.LeftShift) && v > 0.5;}
 
-	void OnCollisionExit(Collision collision) {
+	void OnCollisionExit (Collision collision) {
 		currentlyColliding.Remove(collision.collider);
 		if (collision.collider == currentTree) {
 			currentTree = null;
@@ -96,7 +85,7 @@ using JetBrains.Annotations;
 		}
 		movement = playerRigidbody.rotation * movement;
 		movement *= SPEED * Time.deltaTime;
-
+		
 		playerRigidbody.MovePosition(transform.position + movement);
 	}
 
