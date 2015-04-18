@@ -14,12 +14,12 @@ public class NetworkManager : MonoBehaviour {
 	}
 	const string gameTypeName = "Suirrella Warfare";
 	static bool Connected {get {return Network.isClient || Network.isServer;}}
-	List<HostData> hosts = new List<HostData>();
+    ListDisplay<HostData> hostsListDisplay = new ListDisplay<HostData>(new List<HostData>());
 	void RequestHosts () {MasterServer.RequestHostList(gameTypeName);}
 	[UsedImplicitly] void OnMasterServerEvent (MasterServerEvent masterServerEvent) {
 		if (masterServerEvent == MasterServerEvent.HostListReceived) {
 			Debug.Log("Host List Received");
-			hosts = MasterServer.PollHostList().ToList();
+            hostsListDisplay.contents = MasterServer.PollHostList().ToList();
 		}
 	}
 	void Join (HostData hostData) {Network.Connect(hostData);}
@@ -36,13 +36,12 @@ public class NetworkManager : MonoBehaviour {
 				StartServer("AsdfGame");
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RequestHosts();
-			var buttonOffset = 0;
-			hosts.ForEach(host => {
-				if (GUI.Button(new Rect(400, 100 + (buttonOffset), 300, 100), host.gameName))
-					Join(host);
-				buttonOffset += 110;
-			});
-		}
+			
+            hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
+            
+            hostsListDisplay.OnChoose(Join);
+			}
+		
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
 	}

@@ -6,7 +6,6 @@ using UnityEngine;
 class ListDisplay <T> {
 	public ICollection<T> contents;
 	Action<T> chooseCallback = t => {};
-	public T selection;
 	List<T> presented;
 	int linesVisible;
 	float sliderValue;
@@ -14,7 +13,6 @@ class ListDisplay <T> {
 	Rect scrollerBox;
 	public ListDisplay (ICollection<T> referenceContentsTo) {
 		contents = referenceContentsTo;
-		selection = default(T);
 	}
 	public void Draw (Rect box) {
 		linesVisible = ((int) box.height ) / 20;
@@ -32,14 +30,14 @@ class ListDisplay <T> {
 			DrawEntry(box, i, presented[i]);
 	}
 	void DrawEntry (Rect outsideBox, int index, T toShow) {
-		var isSelected = EqualityComparer<T>.Default.Equals(toShow, selection);
 		var oldColor = GUI.color;
-		GUI.color = isSelected ? Color.red : Color.white;
 		var displayString = toShow == null ? "None" : toShow.ToString();
+        GUI.color = Color.white;
 		var buttonRect = new Rect(outsideBox.x, outsideBox.y + index * 20, outsideBox.width - 30, 20);
 		GUI.color = oldColor;
-		if (GUI.Button(buttonRect, displayString))
-			chooseCallback(selection);
+        if (GUI.Button(buttonRect, displayString)) {
+            chooseCallback(toShow);
+        }			
 	}
 	public ListDisplay<T> OnChoose (Action<T> callback) {
 		chooseCallback = callback;
