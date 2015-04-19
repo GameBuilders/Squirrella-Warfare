@@ -11,7 +11,7 @@ public abstract class TraceWeapon : Weapon {
 		};
 		// ReSharper disable once RedundantAssignment
 		var shootHit = new RaycastHit();
-		if (Physics.Raycast(shootRay, out shootHit, TraceRange, LayerMask.GetMask("Everything"))) {
+		if (Physics.Raycast(shootRay, out shootHit, /*TraceRange*/int.MaxValue)) {
 			MonoBehaviour.print("hit: " + shootHit);
 			var enemyPlayer = shootHit.collider.GetComponent<Squirrell>();
 			if (enemyPlayer != null)
