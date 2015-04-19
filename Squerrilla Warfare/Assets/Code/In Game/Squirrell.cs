@@ -32,11 +32,11 @@ using JetBrains.Annotations;
 			Camera camera = cameraObj.AddComponent<Camera>();
 			camera.transform.localPosition = new Vector3(0, 1, -2);
 			cameraObj.AddComponent<CameraVert>();
-			cameraObj.transform.parent = this.transform;
+			cameraObj.transform.parent = transform;
 		}
 	}
 	[UsedImplicitly] void Update () {
-		if (networkView.isMine)
+		if (networkView.isMine && !Game.showMenu)
 			InputMovement();
 	}
 	Rigidbody rigidBody;

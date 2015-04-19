@@ -3,20 +3,29 @@ using JetBrains.Annotations;
 
 public class Game : MonoBehaviour {
 	// ReSharper disable once MemberCanBePrivate.Global
+	// ReSharper disable once NotAccessedField.Global
 	public static Game game;
+	// ReSharper disable once MemberCanBePrivate.Global
+	public static NetworkManager networkManager;
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static Assets assets;
 	[UsedImplicitly] void Start () {
 		game = this;
+		networkManager = GetComponent<NetworkManager>();
 		assets = GetComponent<Assets>();
 	}
 	[UsedImplicitly] void Update () {
 		//if (Input.GetKeyDown("1"))
 		//	SpawnSquirrell();
 	}
+	// ReSharper disable once InconsistentNaming
 	[UsedImplicitly] void OnGUI () {
-    Cursor.visible = showMenu;
-    Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
+		Cursor.visible = showMenu;
+		Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
+		if (!NetworkManager.Connected)
+			showMenu = true;
+		if (showMenu)
+			networkManager.DrawMenu();
     //Draw Loadout UI
     GUI.Box (new Rect (Screen.width/2 - 100, 20, 200, 220), "Loadout");
     GUI.Box (new Rect (50, 2*Screen.height/3, 
