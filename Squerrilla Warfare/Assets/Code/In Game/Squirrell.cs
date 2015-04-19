@@ -29,10 +29,11 @@ using JetBrains.Annotations;
 
 		if (networkView.isMine) {
 			GameObject cameraObj = new GameObject("squirrell camera");
+			cameraObj.transform.parent = transform;
 			Camera camera = cameraObj.AddComponent<Camera>();
 			camera.transform.localPosition = new Vector3(0, 1, -2);
 			cameraObj.AddComponent<CameraVert>();
-			cameraObj.transform.parent = transform;
+			
 		}
 	}
 	[UsedImplicitly] void Update () {

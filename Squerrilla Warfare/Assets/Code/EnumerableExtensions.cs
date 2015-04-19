@@ -173,6 +173,9 @@ public static partial class Extensions {
 	public static T RandomElement<T> (this IEnumerable<T> enumerable) {
 		return enumerable == null ? default(T) : enumerable.ToArray().RandomElement();
 	}
+	public static T RandomElement<T> (this T[] array) {
+		return array == null || !array.Any() ? default(T) : array[Random.Range(0, array.Length)];
+	}
 	public static int RandomIndex<T> (this IEnumerable<T> enumerable) {
 		return enumerable == null ? 0 : Random.Range(0, enumerable.Count());
 	}
