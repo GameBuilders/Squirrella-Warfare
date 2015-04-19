@@ -13,9 +13,12 @@ public abstract class TraceWeapon : Weapon {
 		var shootHit = new RaycastHit();
 		if (Physics.Raycast(shootRay, out shootHit, /*TraceRange*/int.MaxValue)) {
 			MonoBehaviour.print("hit: " + shootHit);
-			var enemyPlayer = shootHit.collider.GetComponent<Squirrell>();
-			if (enemyPlayer != null)
-				enemyPlayer.Damage(TraceDamage);
+			var enemySquirrell = shootHit.collider.GetComponent<Squirrell>();
+			if (enemySquirrell != null) {
+				NetworkPlayer enemyPlayer = enemySquirrell.networkView.viewID.owner;
+				owner.networkView.RPC("Damage", enemyPlayer, 999f);
+				//enemySquirrell.Damage(TraceDamage);
+			}
 		}
 	}
 }
