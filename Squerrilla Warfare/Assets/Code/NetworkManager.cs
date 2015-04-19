@@ -43,16 +43,20 @@ public class NetworkManager : MonoBehaviour {
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
 	}
+	[UsedImplicitly] void OnDisconnectedFromServer (NetworkDisconnection info) {DestroyNetworkObjects();}
 	[UsedImplicitly] void OnPlayerDisconnected (NetworkPlayer player) {
+
 	}
 	[UsedImplicitly] void Update () {
 		if (Input.GetKeyDown("escape"))
 			Game.showMenu = !Game.showMenu;
 	}
-	void Disconnect () {
+	void DestroyNetworkObjects () {
+		Network.DestroyPlayerObjects(Network.player);
 		Network.Disconnect();
 		FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
 	}
+	public void Disconnect () {DestroyNetworkObjects();}
 	[UsedImplicitly] void OnConnectedToServer () {
 		Game.JoinedGame();
 		joining = false;
