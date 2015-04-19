@@ -14,6 +14,9 @@ using JetBrains.Annotations;
 
 	private Rigidbody playerRigidbody;
 	private int floorMask;
+    private Rigidbody rigidBody;
+    public bool canJump = true;
+	new NetworkView networkView;
 	//private float camRayLength = 100f;
 
 	float h, v;
@@ -31,24 +34,25 @@ using JetBrains.Annotations;
 			GameObject cameraObj = new GameObject("squirrell camera");
 			cameraObj.transform.parent = transform;
 			Camera camera = cameraObj.AddComponent<Camera>();
-			camera.transform.localPosition = new Vector3(0, 1, -2);
+			camera.transform.localPosition = new Vector3(0, 1, -10);
 			cameraObj.AddComponent<CameraVert>();
 			
 		}
 	}
+
 	[UsedImplicitly] void Update () {
 		if (networkView.isMine && !Game.showMenu)
 			InputMovement();
 	}
-	Rigidbody rigidBody;
-	new NetworkView networkView;
+	
 	void InputMovement () {
 
 		h = Input.GetAxis("Horizontal");
 		v = Input.GetAxis("Vertical");
 
 		if (currentTree == null) {
-			if (Input.GetKeyDown("space") && currentlyColliding.Count > 0) {
+			if (Input.GetKeyDown("space") && canJump)
+            {
 				Vector3 vel = playerRigidbody.velocity;
 				vel.y = JUMP_HEIGHT;
 				playerRigidbody.velocity = vel;
@@ -62,6 +66,7 @@ using JetBrains.Annotations;
 	void OnCollisionEnter(Collision collision) {
 		//string tag = collision.collider.gameObject.tag;
 		currentlyColliding.Add(collision.collider);
+	    
 	}
 
 	void OnCollisionStay(Collision collision) {
@@ -80,6 +85,12 @@ using JetBrains.Annotations;
 				playerRigidbody.velocity = vel;
 			}
 		}
+
+        // Only allow jumping on the ground and trees
+        if (collision.transform.tag == "Climbable")
+	    {
+            canJump = true;
+	    }
 	}
 
 	bool WantsClimbing() { return Input.GetKey(KeyCode.LeftShift) && v > 0.5; }
@@ -90,6 +101,7 @@ using JetBrains.Annotations;
 			currentTree = null;
 			playerRigidbody.useGravity = true;
 		}
+        canJump = false;
 	}
 
 	void Move() {

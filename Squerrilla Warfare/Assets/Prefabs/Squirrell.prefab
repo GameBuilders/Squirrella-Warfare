@@ -1,45 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &130422
+--- !u!1 &149590
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 482700}
-  - 33: {fileID: 3326866}
-  - 65: {fileID: 6582774}
-  - 23: {fileID: 2345356}
-  - 114: {fileID: 11410426}
-  - 54: {fileID: 5458628}
-  - 143: {fileID: 14310674}
-  - 148: {fileID: 14836326}
+  - 4: {fileID: 488548}
+  - 33: {fileID: 3320146}
+  - 65: {fileID: 6598668}
+  - 23: {fileID: 2351998}
+  - 114: {fileID: 11450970}
+  - 54: {fileID: 5497616}
+  - 143: {fileID: 14334198}
+  - 148: {fileID: 14882810}
   m_Layer: 0
-  m_Name: Squirrell
+  m_Name: squirrell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &482700
+--- !u!4 &488548
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.27199996, y: 1, z: .0270000007}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_GameObject: {fileID: 149590}
+  m_LocalRotation: {x: 3.45606963e-07, y: -.707106709, z: .707106829, w: 3.45606963e-07}
+  m_LocalPosition: {x: 5.71442223, y: .986047745, z: 15.605258}
+  m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2345356
+--- !u!23 &2351998
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,19 +58,19 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3326866
+--- !u!33 &3320146
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5458628
+--- !u!54 &5497616
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -80,35 +80,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6582774
+--- !u!65 &6598668
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11410426
+--- !u!114 &11450970
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3716ca06869bff48b3cb4fc24e52da6, type: 3}
-  m_Name: 
+  m_Name: Squirrell
   m_EditorClassIdentifier: 
---- !u!143 &14310674
+  canJump: 1
+--- !u!143 &14334198
 CharacterController:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
@@ -120,15 +121,15 @@ CharacterController:
   m_SkinWidth: .0799999982
   m_MinMoveDistance: .00100000005
   m_Center: {x: 0, y: 0, z: 0}
---- !u!148 &14836326
+--- !u!148 &14882810
 NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130422}
+  m_GameObject: {fileID: 149590}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 482700}
+  m_Observed: {fileID: 488548}
   m_ViewID:
     m_ID: 0
     m_Type: 0
@@ -141,5 +142,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 130422}
+  m_RootGameObject: {fileID: 149590}
   m_IsPrefabParent: 1
