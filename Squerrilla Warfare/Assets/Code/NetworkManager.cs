@@ -9,7 +9,7 @@ public class NetworkManager : MonoBehaviour {
 		MasterServer.RegisterHost(gameTypeName, lobbyName);
 	}
 	[UsedImplicitly] void OnServerInitialized () {
-		Debug.Log("Server Initialized.");
+		//Debug.Log("Server Initialized.");
 		Game.JoinedGame();
 	}
 	const string gameTypeName = "Suirrella Warfare";

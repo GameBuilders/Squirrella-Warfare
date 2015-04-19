@@ -59,7 +59,7 @@ using JetBrains.Annotations;
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		string tag = collision.collider.gameObject.tag;
+		//string tag = collision.collider.gameObject.tag;
 		currentlyColliding.Add(collision.collider);
 	}
 
