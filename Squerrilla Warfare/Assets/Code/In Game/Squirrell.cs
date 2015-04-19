@@ -4,8 +4,8 @@ using JetBrains.Annotations;
 
 [UsedImplicitly] public class Squirrell : MonoBehaviour {
 
-	public const float SPEED = 6f;
-	public const float JUMP_HEIGHT = 10f;
+	public const float SPEED = 2f;
+	public const float JUMP_HEIGHT = 4f;
 	public const float CLIMB_SPEED = 2f;
 	Vector3 movement;
 
@@ -16,7 +16,8 @@ using JetBrains.Annotations;
 	private int floorMask;
     private Rigidbody rigidBody;
     public bool canJump = true;
-	new NetworkView networkView;
+    private NetworkView networkView;
+	// new NetworkView networkView;
 	//private float camRayLength = 100f;
 
 	float h, v;
@@ -28,7 +29,7 @@ using JetBrains.Annotations;
 
 		playerRigidbody = GetComponent<Rigidbody>();
 		currentlyColliding = new HashSet<Collider>();
-		currentTree = null;
+		// currentTree = null;
 
 		if (networkView.isMine) {
 			GameObject cameraObj = new GameObject("squirrell camera");
@@ -80,9 +81,7 @@ using JetBrains.Annotations;
 			if (collision.collider.gameObject.tag == "Tree" && WantsClimbing()) {
 				currentTree = collision.collider;
 				playerRigidbody.useGravity = false;
-				Vector3 vel = playerRigidbody.velocity;
-				vel.y = CLIMB_SPEED;
-				playerRigidbody.velocity = vel;
+			    playerRigidbody.velocity.Set(playerRigidbody.velocity.x, playerRigidbody.velocity.y, CLIMB_SPEED);
 			}
 		}
 
