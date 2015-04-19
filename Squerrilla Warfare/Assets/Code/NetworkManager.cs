@@ -13,33 +13,30 @@ public class NetworkManager : MonoBehaviour {
 		Game.JoinedGame();
 	}
 	const string gameTypeName = "Suirrella Warfare";
-	static bool Connected {get {return Network.isClient || Network.isServer;}}
+	public static bool Connected {get {return Network.isClient || Network.isServer;}}
     ListDisplay<HostData> hostsListDisplay = new ListDisplay<HostData>(new List<HostData>());
 	void RequestHosts () {MasterServer.RequestHostList(gameTypeName);}
 	[UsedImplicitly] void OnMasterServerEvent (MasterServerEvent masterServerEvent) {
-		if (masterServerEvent == MasterServerEvent.HostListReceived) {
+		if (masterServerEvent == MasterServerEvent.HostListReceived)
 			Debug.Log("Host List Received");
             hostsListDisplay.contents = MasterServer.PollHostList().ToList();
-		}
 	}
-	void Join (HostData hostData) {Network.Connect(hostData);}
-	// ReSharper disable once InconsistentNaming
-	[UsedImplicitly] void OnGUI () {
-		if (!Connected)
-			Game.showMenu = true;
-		if (Game.showMenu)
-			DrawMenu();
+	void Join (HostData hostData) {
+		Network.Connect(hostData);
+		joining = true;
 	}
-	void DrawMenu () {
+	void PlayerHitJoin (HostData hostData) {
+		if (!joining)
+			Join(hostData);
+	}
+	public void DrawMenu () {
 		if (!Connected) {
 			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
 				StartServer("AsdfGame");
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RequestHosts();
             hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
-            hostsListDisplay.OnChoose(Join);
 			}
-		
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
 	}
@@ -56,5 +53,10 @@ public class NetworkManager : MonoBehaviour {
 	[UsedImplicitly] void OnConnectedToServer () {
 		Debug.Log("Server Joined");
 		Game.JoinedGame();
+		joining = false;
+	}
+	bool joining = false;
+	[UsedImplicitly] void Start () {
+		hostsListDisplay.OnChoose(PlayerHitJoin);
 	}
 }
