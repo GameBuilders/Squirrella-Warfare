@@ -101,7 +101,7 @@ using UnityEngine;
 			var cameraObj = new GameObject("squirrell camera");
 			cameraObj.transform.parent = transform;
 			var camera = cameraObj.AddComponent<Camera>();
-			camera.transform.localPosition = new Vector3(0, 5, -10);
+			camera.transform.localPosition = new Vector3(0, 10, -20);
 			cameraObj.AddComponent<CameraVert>();
 		}
 	    anim = GetComponent<Animator>();
@@ -187,10 +187,13 @@ using UnityEngine;
         bool walking = h != 0f || v != 0f;
         bool leftStrafe = h < 0f && v == 0f;
         bool rightStrafe = h > 0f && v == 0f;
+        bool backup = v < 0f;
         if (!leftStrafe)
             anim.SetBool("LeftStrafe", false);
         if (!rightStrafe)
             anim.SetBool("RightStrafe", false);
+        if (!backup)
+            anim.SetBool("Backup", false);
         if (walking)
         {
             if (!leftStrafe && !rightStrafe)
@@ -199,6 +202,8 @@ using UnityEngine;
                 anim.SetBool("LeftStrafe", true);
             else if (rightStrafe)
                 anim.SetBool("RightStrafe", true);
+            else if (backup)
+                anim.SetBool("Backup", true);
         }
         else
         {
