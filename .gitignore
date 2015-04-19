@@ -52,3 +52,9 @@ ehthumbs.db
 #       Builds      #
 # ================= #
 /Builds/
+
+# ================= #
+#       Other       #
+# ================= #
+
+/Squerrilla Warfare/.HistoryData/usage.log
