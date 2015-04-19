@@ -54,15 +54,6 @@ public class NetworkManager : MonoBehaviour
         if (!joining)
             Join(hostData);
     }
-    public void DrawMenu()
-    {
-        if (!Connected)
-        {
-            hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
-        }
-        else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
-            Disconnect();
-    }
 
     [UsedImplicitly]
     void OnPlayerDisconnected(NetworkPlayer player)
@@ -100,7 +91,7 @@ public class NetworkManager : MonoBehaviour
     //UI STUFF
     private void hideall()
     {
-        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerUI");
+        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerMenuUI");
 
         foreach (GameObject uiElement in uiElements)
             uiElement.SetActive(false);
@@ -108,7 +99,7 @@ public class NetworkManager : MonoBehaviour
 
     private void showall()
     {
-        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerUI");
+        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerMenuUI");
 
         foreach (GameObject uiElement in uiElements)
             uiElement.SetActive(true);
