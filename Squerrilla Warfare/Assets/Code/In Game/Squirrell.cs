@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 [UsedImplicitly] public class Squirrell : MonoBehaviour {
-	const float speed = 2f;
+	const float speed = 3f;
 	const float jumpHeight = 4f;
 	const float climbSpeed = 2f;
 	bool canJump = true;
@@ -111,6 +111,7 @@ using UnityEngine;
 			fireTimer = currentWeapon.FireDelay - currentWeapon.ReloadTime;
 		}
 	}//
+	Animator anim;
 	[UsedImplicitly] void Start () {
 		MainWeapon = new AssaultRifle();
 		SecondaryWeapon = new AssaultRifle();
@@ -131,9 +132,10 @@ using UnityEngine;
 			var cameraObj = new GameObject("squirrell camera");
 			cameraObj.transform.parent = transform;
 			var camera = cameraObj.AddComponent<Camera>();
-			camera.transform.localPosition = new Vector3(0, 1, -10);
+			camera.transform.localPosition = new Vector3(0, 5, -10);
 			cameraObj.AddComponent<CameraVert>();
 		}
+	    anim = GetComponent<Animator>();
 	}
 	[UsedImplicitly] void Update () {
 		if (networkView.isMine && !Game.showMenu)
@@ -162,6 +164,7 @@ using UnityEngine;
 				var vel = playerRigidbody.velocity;
 				vel.y = jumpHeight;
 				playerRigidbody.velocity = vel;
+			    anim.SetTrigger("Jump");
 			}
 			Move();
 		}
@@ -200,17 +203,41 @@ using UnityEngine;
 		}
 		canJump = false;
 	}
-	void Move () {
-		movement.Set(h, 0f, v);
-		//movement = movement.normalized;
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			movement.z = movement.z * 2;
-		}
-		movement = playerRigidbody.rotation * movement;
-		movement *= speed * Time.deltaTime;
-		playerRigidbody.MovePosition(transform.position + movement);
-	}
-	void Turning () {
+
+    private void Move()
+    {
+        movement.Set(h, 0f, v);
+        //movement = movement.normalized;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            movement.z = movement.z*2;
+        }
+        movement = playerRigidbody.rotation*movement;
+        movement *= speed*Time.deltaTime;
+        playerRigidbody.MovePosition(transform.position + movement);
+        bool walking = h != 0f || v != 0f;
+        bool leftStrafe = h < 0f && v == 0f;
+        bool rightStrafe = h > 0f && v == 0f;
+        if (!leftStrafe)
+            anim.SetBool("LeftStrafe", false);
+        if (!rightStrafe)
+            anim.SetBool("RightStrafe", false);
+        if (walking)
+        {
+            if (!leftStrafe && !rightStrafe)
+                anim.SetBool("IsRunning", true);
+            else if (leftStrafe)
+                anim.SetBool("LeftStrafe", true);
+            else if (rightStrafe)
+                anim.SetBool("RightStrafe", true);
+        }
+        else
+        {
+            anim.SetBool("IsRunning", false);
+        }
+    }
+
+    void Turning () {
 		var rotX = Input.GetAxis("Mouse X");
 		playerRigidbody.MoveRotation(playerRigidbody.rotation * Quaternion.AngleAxis(rotX * 2, Vector3.up));
 	}
