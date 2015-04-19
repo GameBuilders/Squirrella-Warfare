@@ -10,8 +10,8 @@ using UnityEngine;
 	HashSet<Collider> currentlyColliding;
 	/* Weapon Code Ends */
 	Collider currentTree;
-	int currentHealth;
-	int CurrentHealth {
+	float currentHealth;
+	float CurrentHealth {
 		get {return currentHealth;}
 		set {
 			currentHealth = value;
@@ -64,10 +64,9 @@ using UnityEngine;
 	Rigidbody rigidBody;
 	GameObject weaponModel = null;
 	//getters and setters for health and ammo
-	public void Damage (int amount) {CurrentHealth -= amount;}
 	[RPC] public void Damage (float amount) {
-		MonoBehaviour.print("I have been damaged.");
-		Damage(Mathf.RoundToInt(amount));
+		print("I have been damaged.");
+		CurrentHealth -= amount;
 	}
 	int Ammo {
         get {return CurrentWeapon.totalAmmo;}
