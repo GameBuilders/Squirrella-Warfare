@@ -11,6 +11,11 @@ public class UI : MonoBehaviour
 	public int primaryWeaponID = 0;
 	public int secondaryWeaponID = 0;
 
+    public bool MenuShowing { get { return MainMenuShowing || ServerMenuShowing; }}
+
+    private bool MainMenuShowing = false;
+    private bool ServerMenuShowing = false;
+
     [UsedImplicitly]
     void Start()
     {
@@ -36,6 +41,7 @@ public class UI : MonoBehaviour
         {
             uiElement.SetActive(active);
         }
+	    MainMenuShowing = active;
     }
 	
 	public void ServerMenuShowAll(bool active)
@@ -48,6 +54,7 @@ public class UI : MonoBehaviour
         {
             uiElement.SetActive(active);
         }
+	    ServerMenuShowing = active;
     }
 	
 	public void updateLoadout(bool primary)

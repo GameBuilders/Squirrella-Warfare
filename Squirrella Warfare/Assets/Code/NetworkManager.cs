@@ -8,23 +8,17 @@ public class NetworkManager : MonoBehaviour
 {
     const string gameTypeName = "Squirrella Warfare";
     bool joining = false;
+    private InputField serverField;
 
     public void StartServerButton()
     {
-        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerUI");
-
-        foreach (GameObject uiElement in uiElements)
-        {
-            if (uiElement.name.Equals("InputField"))
-                StartServer(uiElement.GetComponent<InputField>().text);
-        }
+        serverField = UnityEngine.GameObject.FindGameObjectWithTag("ServerName").GetComponent<InputField>();
     }
 
     private void StartServer(string lobbyName)
     {
         Network.InitializeServer(4, 12, !Network.HavePublicAddress());
         MasterServer.RegisterHost(gameTypeName, lobbyName);
-        hideall();
     }
 
     [UsedImplicitly]
@@ -54,15 +48,6 @@ public class NetworkManager : MonoBehaviour
         if (!joining)
             Join(hostData);
     }
-    public void DrawMenu()
-    {
-        if (!Connected)
-        {
-            hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
-        }
-        else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
-            Disconnect();
-    }
 
     [UsedImplicitly]
     void OnPlayerDisconnected(NetworkPlayer player)
@@ -75,18 +60,11 @@ public class NetworkManager : MonoBehaviour
         hostsListDisplay.OnChoose(PlayerHitJoin);
     }
 
-    [UsedImplicitly]
-    void Update()
-    {
-        if (Input.GetKeyDown("escape"))
-            Game.showMenu = !Game.showMenu;
-    }
 
     void Disconnect()
     {
         Network.Disconnect();
         FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
-        showall();
     }
 
     [UsedImplicitly]
@@ -97,20 +75,4 @@ public class NetworkManager : MonoBehaviour
         joining = false;
     }
 
-    //UI STUFF
-    private void hideall()
-    {
-        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerUI");
-
-        foreach (GameObject uiElement in uiElements)
-            uiElement.SetActive(false);
-    }
-
-    private void showall()
-    {
-        GameObject[] uiElements = UnityEngine.GameObject.FindGameObjectsWithTag("ServerUI");
-
-        foreach (GameObject uiElement in uiElements)
-            uiElement.SetActive(true);
-    }
 }
