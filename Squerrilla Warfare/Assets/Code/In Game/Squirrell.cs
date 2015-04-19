@@ -102,7 +102,7 @@ using JetBrains.Annotations;
     {
         fireTimer = 0f;
         useAmmo();
-        Debug.Log(getClip());
+        Debug.Log(getHealth());
         CurrentWeapon.Fire();
     }
 
@@ -167,6 +167,15 @@ using JetBrains.Annotations;
 	[UsedImplicitly] void Update () {
 		if (networkView.isMine && !Game.showMenu)
 			InputMovement();
+
+        fireTimer += Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && fireTimer >= FireDelay && Time.timeScale != 0 && getClip() > 0)
+        {
+            Shoot();
+        }
+        else if (Input.GetButton("Reload") && getClip() < getMaxClip())
+            Reload();
 	}
 	Rigidbody rigidBody;
 	new NetworkView networkView;
