@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public abstract class Weapon {
+	public Squirrell owner;
 	public abstract float FireDelay {get;}
 	public abstract float ReloadTime {get;}
 	public abstract int MaxAmmo {get;}

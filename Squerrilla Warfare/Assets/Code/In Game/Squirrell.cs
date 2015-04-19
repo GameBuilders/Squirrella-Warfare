@@ -38,7 +38,8 @@ using UnityEngine;
 	GameObject weaponPrefab = null;
 	//getters and setters for health and ammo
 	public int Ammo {get {return totalAmmo;}}
-	public void Damage (int val) {CurrentHealth -= val;}
+	public void Damage (int amount) {CurrentHealth -= amount;}
+	public void Damage (float amount) {Damage(Mathf.RoundToInt(amount));}
 	public void UseAmmo () {ammoInClip -= 1;}
 	Weapon currentWeapon;
 	void Die () {}//todo
