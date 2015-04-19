@@ -6843,6 +6843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squirrell: {fileID: 130422, guid: 89051d5b5dd7da74096c677e219ad0aa, type: 2}
+  arPrefab: {fileID: 143928, guid: b483e5eda8b9ccf4cb9cde87de480525, type: 2}
 --- !u!114 &1695984868
 MonoBehaviour:
   m_ObjectHideFlags: 0
