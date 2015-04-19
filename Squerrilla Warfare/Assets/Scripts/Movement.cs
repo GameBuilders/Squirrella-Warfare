@@ -13,14 +13,14 @@ public class Movement : MonoBehaviour {
 
 	//private Animator anim;
 	private Rigidbody playerRigidbody;
-	private int floorMask;
-	private float camRayLength = 100f;
+	//!private int floorMask;
+	//private float camRayLength = 100f;
 
 	float h, v;
 
 	void Awake() {
-		floorMask = LayerMask.GetMask("Floor");
-		//anim = GetComponent<Animator>();
+		//!floorMask = LayerMask.GetMask("Floor");
+		//anim = GetComponent<Animator>();//
 		playerRigidbody = GetComponent<Rigidbody>();
 		currentlyColliding = new HashSet<Collider>();
 		currentTree = null;

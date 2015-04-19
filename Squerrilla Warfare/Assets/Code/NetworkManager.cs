@@ -31,6 +31,8 @@ public class NetworkManager : MonoBehaviour {
 			DrawMenu();
 	}
 	void DrawMenu () {
+		Cursor.visible = !Connected;
+		Cursor.lockState = Connected ? CursorLockMode.Locked : CursorLockMode.None;
 		if (!Connected) {
 			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
 				StartServer("AsdfGame");

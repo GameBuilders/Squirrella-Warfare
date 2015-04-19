@@ -2,14 +2,11 @@
 using System.Collections;
 
 public class CameraVert : MonoBehaviour {
-
-	Camera camera;
-
+	new Camera camera;
 	// Use this for initialization
 	void Start () {
 		camera = GetComponent<Camera>();
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		float rotY = Input.GetAxis("Mouse Y");

@@ -14,7 +14,7 @@ using JetBrains.Annotations;
 
 	private Rigidbody playerRigidbody;
 	private int floorMask;
-	private float camRayLength = 100f;
+	//private float camRayLength = 100f;
 
 	float h, v;
 
@@ -26,8 +26,6 @@ using JetBrains.Annotations;
 		playerRigidbody = GetComponent<Rigidbody>();
 		currentlyColliding = new HashSet<Collider>();
 		currentTree = null;
-
-		Screen.lockCursor = true;
 
 		if (networkView.isMine) {
 			GameObject cameraObj = new GameObject("squirrell camera");
