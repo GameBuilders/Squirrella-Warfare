@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Tree
   - Climbable
+  - ServerUI
   layers:
   - Default
   - TransparentFX
