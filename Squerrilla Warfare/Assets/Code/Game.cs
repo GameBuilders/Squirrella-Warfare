@@ -82,4 +82,8 @@ public class Game : MonoBehaviour {
         AudioSource soundClip = audioSource.GetComponent<AudioSource>();
         soundClip.clip = sound.RandomElement();
     }
+	public static void OnDied () {
+		Network.Destroy(game.mySquirrell.gameObject);
+		SpawnMySquirrell();
+	}
 }

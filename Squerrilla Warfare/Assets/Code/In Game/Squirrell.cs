@@ -80,7 +80,7 @@ using UnityEngine;
 	Weapon currentWeapon;
 	void Die () {
 		MonoBehaviour.print("What a world.");
-		Game.networkManager.Disconnect();
+		Game.OnDied();
 	}//todo
 	// ReSharper disable once MemberCanBePrivate.Global
 	public Weapon CurrentWeapon {get {return currentWeapon;}
