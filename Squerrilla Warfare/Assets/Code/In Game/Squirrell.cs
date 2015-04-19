@@ -60,9 +60,7 @@ using JetBrains.Annotations;
 
 	void OnCollisionEnter(Collision collision) {
 		string tag = collision.collider.gameObject.tag;
-		if (tag == "Ground" || tag == "Tree") {
-			currentlyColliding.Add(collision.collider);
-		}
+		currentlyColliding.Add(collision.collider);
 	}
 
 	void OnCollisionStay(Collision collision) {
