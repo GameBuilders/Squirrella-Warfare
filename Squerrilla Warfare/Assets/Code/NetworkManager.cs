@@ -45,7 +45,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 	[UsedImplicitly] void OnDisconnectedFromServer (NetworkDisconnection info) {DestroyNetworkObjects();}
 	[UsedImplicitly] void OnPlayerDisconnected (NetworkPlayer player) {
-
+		DestroyNetworkObjects();
 	}
 	[UsedImplicitly] void Update () {
 		if (Input.GetKeyDown("escape"))
@@ -53,10 +53,12 @@ public class NetworkManager : MonoBehaviour {
 	}
 	void DestroyNetworkObjects () {
 		Network.DestroyPlayerObjects(Network.player);
-		Network.Disconnect();
 		FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
 	}
-	public void Disconnect () {DestroyNetworkObjects();}
+	public void Disconnect () {
+		Network.Disconnect();
+		DestroyNetworkObjects();
+	}
 	[UsedImplicitly] void OnConnectedToServer () {
 		Game.JoinedGame();
 		joining = false;

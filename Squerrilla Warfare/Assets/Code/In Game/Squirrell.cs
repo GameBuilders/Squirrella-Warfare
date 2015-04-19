@@ -35,13 +35,16 @@ using UnityEngine;
 	float h, v;
 	const int maxHealth = 100; //max health. Change as needed
 	Vector3 movement;
-	new NetworkView networkView;//
+	new NetworkView networkView;
 	Rigidbody playerRigidbody;
 	Rigidbody rigidBody;
 	GameObject weaponModel = null;
 	//getters and setters for health and ammo
 	public void Damage (int amount) {CurrentHealth -= amount;}
-	[RPC] public void Damage (float amount) {Damage(Mathf.RoundToInt(amount));}
+	[RPC] public void Damage (float amount) {
+		MonoBehaviour.print("I have been damaged.");
+		Damage(Mathf.RoundToInt(amount));
+	}
 	int Ammo {
         get {return CurrentWeapon.totalAmmo;}
         set {CurrentWeapon.totalAmmo = value;}
@@ -52,7 +55,10 @@ using UnityEngine;
     }
 	void UseAmmo () {CurrentWeapon.ammoInClip -= 1;}
 	Weapon currentWeapon;
-	void Die () {Game.networkManager.Disconnect();}//todo
+	void Die () {
+		MonoBehaviour.print("What a world.");
+		Game.networkManager.Disconnect();
+	}//todo
 	// ReSharper disable once MemberCanBePrivate.Global
 	public Weapon CurrentWeapon {get {return currentWeapon;}
 		set {

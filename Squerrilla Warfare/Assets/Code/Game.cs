@@ -17,8 +17,10 @@ public class Game : MonoBehaviour {
 		game = this;
 		networkManager = GetComponent<NetworkManager>();
 		assets = GetComponent<Assets>();
+		//dummy for testing:
+		//var spawnPoint = SpawnPoints.First();
+		//Instantiate(assets.squirrell, spawnPoint.position, Quaternion.identity);
 	}
-
 	// ReSharper disable once InconsistentNaming
 	[UsedImplicitly] void OnGUI () {
 		Cursor.visible = showMenu;
