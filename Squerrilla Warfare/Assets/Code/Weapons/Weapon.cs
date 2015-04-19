@@ -9,6 +9,10 @@ public abstract class Weapon {
 	public abstract GameObject ModelPrefab {get;}
 	public abstract void Fire ();
 
+    //For Loadout UI
+    public abstract string Description { get; }
+    public abstract string WeaponName { get; }
+
     public int totalAmmo;
     public int ammoInClip;
 }

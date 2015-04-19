@@ -13,38 +13,59 @@ public class Game : MonoBehaviour {
 	public static Assets assets;
 	[UsedImplicitly] public Transform spawnPointParent;
     public GameObject SelfDeleteAudioSource;
-	[UsedImplicitly] void Start () {
-		game = this;
-		networkManager = GetComponent<NetworkManager>();
-		assets = GetComponent<Assets>();
-	}
+    //Weapon types for UI
+    //private AssaultRifle aR;
+    //public string primaryDescription;
+    //public string primaryWeaponType;
 
-	// ReSharper disable once InconsistentNaming
-	[UsedImplicitly] void OnGUI () {
-		Cursor.visible = showMenu;
-		Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
-		if (!NetworkManager.Connected)
-			showMenu = true;
-		if (showMenu) {
-			networkManager.DrawMenu();
-			if (NetworkManager.Connected && !HasSquirrell) {
-				//Draw Loadout UI
-				GUI.Box(new Rect(Screen.width / 2 - 100, 20, 200, 220), "Loadout");
-				//First Loadout
-				GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height / 3f));
-				GUI.Box(new Rect(50, 50, Screen.width / 2 - 200, 400), "test");
-				if (GUI.Button(new Rect(20, 180, 20, 40), ""))
-					DoNothing();//Change Weapon
-				if (GUI.Button(new Rect(Screen.width / 2 - 120, Screen.height / 3 - 90, 20, 40), ""))
-					DoNothing();//Change Weapon
-				GUI.Box(new Rect(Screen.width / 2 + 100, 10, Screen.width / 2 - 200, 100), "Weapon 1");
-				GUI.Box(new Rect(Screen.width / 2 + 100, Screen.height / 3 + 150, Screen.width / 2 - 200, 300), "Description 1");
-				GUI.EndGroup();
-				if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height - 120, 200, 100), "Spawn"))
-					FinishChoosingWeapons();
-			}
-		}
-	}
+
+    [UsedImplicitly]
+    void Start()
+    {
+        game = this;
+        networkManager = GetComponent<NetworkManager>();
+        assets = GetComponent<Assets>();
+        //primaryDescription = aR.Description;
+        //primaryWeaponType = aR.WeaponName;
+    }
+
+    // ReSharper disable once InconsistentNaming
+    [UsedImplicitly]
+    void OnGUI()
+    {
+        Cursor.visible = showMenu;
+        Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
+        if (!NetworkManager.Connected)
+            showMenu = true;
+        if (showMenu)
+        {
+            networkManager.DrawMenu();
+            if (NetworkManager.Connected && !HasSquirrell)
+            {
+                //Draw Loadout UI
+                GUI.Box(new Rect(0, Screen.height / 6, Screen.width / 4, 2 * Screen.height / 3), "Loadout");
+                //First Loadout
+                GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height));
+                if (GUI.Button(new Rect(Screen.width / 5, Screen.height / 3, Screen.width / 25, Screen.height / 20), ">"))
+                    ; //Change Weapon 1
+                if (GUI.Button(new Rect(Screen.width / 100, Screen.height / 3, Screen.width / 25, Screen.height / 20), "<"))
+                    ; //Change Weapon 1
+                if (GUI.Button(new Rect(Screen.width / 5, Screen.height / 3 * 2, Screen.width / 25, Screen.height / 20), ">"))
+                    ; //Change Weapon 2
+                if (GUI.Button(new Rect(Screen.width / 100, Screen.height / 3 * 2, Screen.width / 25, Screen.height / 20), "<"))
+                    ; //Change Weapon 2
+                GUI.Box(new Rect(Screen.width / 4, Screen.height / 6, Screen.width / 4, Screen.height / 3), "Primary Weapon");
+                //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/6 + Screen.height/12, Screen.width/4, Screen.height/3),
+                //primaryDescription);
+                GUI.Box(new Rect(Screen.width / 4, Screen.height / 2, Screen.width / 4, Screen.height / 3), "Secondary Weapon");
+                //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/2 + Screen.height/12, Screen.width/4, Screen.height/3),
+                //primaryWeaponType);
+                GUI.EndGroup();
+                if (GUI.Button(new Rect(Screen.width / 3, Screen.height / 6 * 5, Screen.width / 3, Screen.height / 6), "Spawn"))
+                    FinishChoosingWeapons();
+            }
+        }
+    }
 	static void FinishChoosingWeapons () {
 		showMenu = false;
 		SpawnMySquirrell();
