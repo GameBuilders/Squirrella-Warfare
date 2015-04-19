@@ -11,7 +11,7 @@ public class Game : MonoBehaviour {
 	public static NetworkManager networkManager;
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static Assets assets;
-	public Transform spawnPointParent;
+	[UsedImplicitly] public Transform spawnPointParent;
 	[UsedImplicitly] void Start () {
 		game = this;
 		networkManager = GetComponent<NetworkManager>();
@@ -61,7 +61,6 @@ public class Game : MonoBehaviour {
 		game.mySquirrell = instantiated.GetComponent<Squirrell>();
 	}
 	public static bool showMenu;
-	public static bool showLoadoutMenu;
 	public Squirrell mySquirrell;
 	public bool HasSquirrell {get {return mySquirrell != null;}}
 }
