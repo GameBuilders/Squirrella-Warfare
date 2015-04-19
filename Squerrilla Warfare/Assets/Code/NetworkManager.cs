@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviour {
 		MasterServer.RegisterHost(gameTypeName, lobbyName);
 	}
 	[UsedImplicitly] void OnServerInitialized () {
-		//Debug.Log("Server Initialized.");
 		Game.JoinedGame();
 	}
 	const string gameTypeName = "Suirrella Warfare";
@@ -18,8 +17,7 @@ public class NetworkManager : MonoBehaviour {
 	void RequestHosts () { MasterServer.RequestHostList(gameTypeName); }
 	[UsedImplicitly] void OnMasterServerEvent (MasterServerEvent masterServerEvent) {
 		if (masterServerEvent == MasterServerEvent.HostListReceived)
-			Debug.Log("Host List Received");
-		hostsListDisplay.contents = MasterServer.PollHostList().ToList();
+			hostsListDisplay.contents = MasterServer.PollHostList().ToList();
 	}
 	void Join (HostData hostData) {
 		Network.Connect(hostData);
@@ -29,10 +27,13 @@ public class NetworkManager : MonoBehaviour {
 		if (!joining)
 			Join(hostData);
 	}
+	string myServerGameName = "Squerrilla Warfare Game";
 	public void DrawMenu () {
 		if (!Connected) {
+			GUI.Label(new Rect(100, 215, 90, 20), "Server Name: ");
+			myServerGameName = GUI.TextField(new Rect(195, 215, 155, 20), myServerGameName);
 			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-				StartServer("AsdfGame");
+				StartServer(myServerGameName);
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RequestHosts();
 			var listDisplayRect = new Rect(400, 100, Screen.width - 400 - 50, Screen.height - 100 - 50);
@@ -53,12 +54,12 @@ public class NetworkManager : MonoBehaviour {
 		FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
 	}
 	[UsedImplicitly] void OnConnectedToServer () {
-		Debug.Log("Server Joined");
 		Game.JoinedGame();
 		joining = false;
 	}
 	bool joining = false;
 	[UsedImplicitly] void Start () {
-		hostsListDisplay.OnChoose(PlayerHitJoin);
+		hostsListDisplay.OnChoose(PlayerHitJoin).SetPrinter(hostData => hostData.gameName);
+		RequestHosts();
 	}
 }

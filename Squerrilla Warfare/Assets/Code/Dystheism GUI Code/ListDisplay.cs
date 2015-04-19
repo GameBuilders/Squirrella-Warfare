@@ -6,6 +6,7 @@ using UnityEngine;
 class ListDisplay <T> {
 	public ICollection<T> contents;
 	Action<T> chooseCallback = t => {};
+	Func<T, string> printer = t => t.ToString();
 	List<T> presented;
 	int linesVisible;
 	float sliderValue;
@@ -29,13 +30,17 @@ class ListDisplay <T> {
 	}
 	void DrawEntry (Rect outsideBox, int index, T toShow) {
 		var oldColor = GUI.color;
-		var displayString = toShow == null ? "None" : toShow.ToString();
+		var displayString = toShow == null ? "None" : printer(toShow);
         GUI.color = Color.white;
 		var buttonRect = new Rect(outsideBox.x, outsideBox.y + index * 20, outsideBox.width - 30, 20);
 		GUI.color = oldColor;
         if (GUI.Button(buttonRect, displayString)) {
             chooseCallback(toShow);
         }			
+	}
+	public ListDisplay<T> SetPrinter (Func<T, string> printer) {
+		this.printer = printer;
+		return this;
 	}
 	public ListDisplay<T> OnChoose (Action<T> callback) {
 		chooseCallback = callback;
