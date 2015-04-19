@@ -10,8 +10,6 @@ public abstract class TraceWeapon : Weapon
     public abstract int getTraceDamage();
     public abstract float getTraceRange();
 
-    public abstract string getProjectileName();
-
     public override void Fire()
     {
         //shootRay.origin = Game.squirrell.transform.position;

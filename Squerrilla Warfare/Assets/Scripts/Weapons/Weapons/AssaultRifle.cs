@@ -13,7 +13,6 @@ public class AssaultRifle : TraceWeapon
     public override int getMaxAmmo() { return 75; }
     public override int getClipSize() { return 25; }
 
-    public override string getProjectileName() { return ""; }
     public override GameObject getModelPrefab() {  return Game.assets.arPrefab; }
    // public override Transform getWeaponMesh() { return Transform(); }
 }
