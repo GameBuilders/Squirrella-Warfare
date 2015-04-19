@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3716ca06869bff48b3cb4fc24e52da6, type: 3}
   m_Name: Squirrell
   m_EditorClassIdentifier: 
+  canJump: 1
   GunHand: {fileID: 0}
 --- !u!143 &14334198
 CharacterController:

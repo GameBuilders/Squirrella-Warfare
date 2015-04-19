@@ -18,6 +18,9 @@ public class Game : MonoBehaviour {
 		game = this;
 		networkManager = GetComponent<NetworkManager>();
 		assets = GetComponent<Assets>();
+	    Instantiate(assets.camera);
+	    Instantiate(assets.quad);
+	    Instantiate(assets.light);
 	}
 	[UsedImplicitly] void Update () {
 		//if (Input.GetKeyDown("1"))
