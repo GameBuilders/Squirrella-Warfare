@@ -132,7 +132,7 @@ using UnityEngine;
 			var cameraObj = new GameObject("squirrell camera");
 			cameraObj.transform.parent = transform;
 			var camera = cameraObj.AddComponent<Camera>();
-			camera.transform.localPosition = new Vector3(0, 5, -10);
+			camera.transform.localPosition = new Vector3(0, 10, -20);
 			cameraObj.AddComponent<CameraVert>();
 		}
 	    anim = GetComponent<Animator>();
