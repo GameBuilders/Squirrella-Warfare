@@ -3,10 +3,10 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 [UsedImplicitly] public class Squirrell : MonoBehaviour {
-	public const float speed = 2f;
-	public const float jumpHeight = 4f;
-	public const float climbSpeed = 2f;
-	public bool canJump = true;
+	const float speed = 2f;
+	const float jumpHeight = 4f;
+	const float climbSpeed = 2f;
+	bool canJump = true;
 	HashSet<Collider> currentlyColliding;
 	/* Weapon Code Ends */
 	Collider currentTree;
@@ -19,25 +19,17 @@ using UnityEngine;
 				Die();
 		}
 	}
-
-    Weapon weapon1;
-    Weapon Weapon1 {
-        get { return weapon1; }
-        set {weapon1 = value; }
-    }
-    Weapon weapon2;
-    Weapon Weapon2 {
-        get { return weapon2; }
-        set { weapon2 = value; }
-    }
-
-    int MaxAmmo { get { return currentWeapon.MaxAmmo; } }
-    int MaxClip { get { return currentWeapon.ClipSize; } }
+	// ReSharper disable MemberCanBePrivate.Global
+	public Weapon weapon1;
+	public Weapon weapon2;
+	// ReSharper restore MemberCanBePrivate.Global
+	int MaxAmmo {get {return currentWeapon.MaxAmmo;}}
+    int MaxClip {get {return currentWeapon.ClipSize;}}
 
 	float FireDelay {get {return currentWeapon.FireDelay;}}
 	/* Weapon Code Begins */
 	float fireTimer;
-	public Transform gunHand;
+	[UsedImplicitly] public GameObject gunHand;
 	// new NetworkView networkView;
 	//private float camRayLength = 100f;
 	float h, v;
@@ -48,31 +40,26 @@ using UnityEngine;
 	Rigidbody rigidBody;
 	GameObject weaponModel = null;
 	//getters and setters for health and ammo
-<<<<<<< HEAD
-	public int Ammo {get {return totalAmmo;}}
 	public void Damage (int amount) {CurrentHealth -= amount;}
 	public void Damage (float amount) {Damage(Mathf.RoundToInt(amount));}
-	public void UseAmmo () {ammoInClip -= 1;}
-=======
-	public int Ammo {
+	int Ammo {
         get {return CurrentWeapon.totalAmmo;}
-        set { CurrentWeapon.totalAmmo = value; }
+        set {CurrentWeapon.totalAmmo = value;}
     }
-    public int AmmoInClip { 
-        get { return CurrentWeapon.ammoInClip; }
-        set { CurrentWeapon.ammoInClip = value; }
+	int AmmoInClip { 
+        get {return CurrentWeapon.ammoInClip;}
+        set {CurrentWeapon.ammoInClip = value;}
     }
-	public void Damage (int val) {CurrentHealth -= val;}
-	public void UseAmmo () {CurrentWeapon.ammoInClip -= 1;}
->>>>>>> 0c2813f341456c002bdbdb08e47df3ea793717eb
+	void UseAmmo () {CurrentWeapon.ammoInClip -= 1;}
 	Weapon currentWeapon;
 	void Die () {}//todo
+	// ReSharper disable once MemberCanBePrivate.Global
 	public Weapon CurrentWeapon {get {return currentWeapon;}
 		set {
 			currentWeapon = value;
 			if (weaponModel != null) //Destroy our previous prefab if it exists
 				Network.Destroy(weaponModel);
-			weaponModel = gameObject.InstantiateChild(value.ModelPrefab);
+			weaponModel = gunHand.InstantiateChild(value.ModelPrefab);
 			weaponModel = value.ModelPrefab;
 		}
 	}
@@ -125,10 +112,10 @@ using UnityEngine;
             TryToShoot();
         else if (Input.GetButton("Reload") && AmmoInClip < MaxClip)
             TryToReload();
-        else if (Input.GetButton("Slot1") && CurrentWeapon != Weapon1)
-            CurrentWeapon = Weapon1;
-        else if (Input.GetButton("Slot2") && CurrentWeapon != Weapon2)
-            CurrentWeapon = Weapon2;
+        else if (Input.GetButton("Slot1") && CurrentWeapon != weapon1)
+            CurrentWeapon = weapon1;
+        else if (Input.GetButton("Slot2") && CurrentWeapon != weapon2)
+            CurrentWeapon = weapon2;
 	}
 	void TryToShoot () {
 		if (AmmoInClip == 0)
