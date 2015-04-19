@@ -22,6 +22,33 @@ using JetBrains.Annotations;
 
 	float h, v;
 
+	private int maxHealth = 100;	//max health. Change as needed
+	private int currHealth;			//current health
+	private int maxAmmo;			//max ammo. Change as needed. How does this change with weapon?
+	private int currAmmo;			//current ammo
+
+	//getters and setters for health and ammo
+	public int getHealth()
+	{
+		return(this.currHealth);
+	}
+	public int getAmmo()
+	{
+		return(this.currAmmo);
+	}
+	public void setHealth(int val)
+	{
+		this.currHealth = val;
+	}
+	public void setMaxAmmo(int val)
+	{
+		this.maxAmmo = val;
+	}
+	public void setAmmo(int val)
+	{
+		this.currAmmo = val;
+	}
+
 	[UsedImplicitly] void Start () {
 		rigidBody = GetComponent<Rigidbody>();
 		rigidBody.freezeRotation = true;
