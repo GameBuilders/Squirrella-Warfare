@@ -54,9 +54,8 @@ using JetBrains.Annotations;
 			}
 			Move();
 		}
-
-		Turning();
-
+		if (!Game.showMenu)
+			Turning();
 	}
 
 	void OnCollisionEnter(Collision collision) {

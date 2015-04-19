@@ -26,21 +26,17 @@ public class NetworkManager : MonoBehaviour {
 	// ReSharper disable once InconsistentNaming
 	[UsedImplicitly] void OnGUI () {
 		if (!Connected)
-			showMenu = true;
-		if (showMenu)
+			Game.showMenu = true;
+		if (Game.showMenu)
 			DrawMenu();
 	}
 	void DrawMenu () {
-		Cursor.visible = !Connected;
-		Cursor.lockState = Connected ? CursorLockMode.Locked : CursorLockMode.None;
 		if (!Connected) {
 			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
 				StartServer("AsdfGame");
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RequestHosts();
-			
             hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
-            
             hostsListDisplay.OnChoose(Join);
 			}
 		
@@ -49,10 +45,9 @@ public class NetworkManager : MonoBehaviour {
 	}
 	[UsedImplicitly] void OnPlayerDisconnected (NetworkPlayer player) {
 	}
-	bool showMenu;
 	[UsedImplicitly] void Update () {
 		if (Input.GetKeyDown("escape"))
-			showMenu = !showMenu;
+			Game.showMenu = !Game.showMenu;
 	}
 	void Disconnect () {
 		Network.Disconnect();

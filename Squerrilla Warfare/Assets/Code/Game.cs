@@ -14,6 +14,14 @@ public class Game : MonoBehaviour {
 		//if (Input.GetKeyDown("1"))
 		//	SpawnSquirrell();
 	}
-	public static void JoinedGame () {SpawnSquirrell();}
+	[UsedImplicitly] void OnGUI () {
+		Cursor.visible = showMenu;
+		Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
+	}
+	public static void JoinedGame () {
+		SpawnSquirrell();
+		showMenu = false;
+	}
 	public static void SpawnSquirrell () {Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0);}
+	public static bool showMenu;
 }
