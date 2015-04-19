@@ -5,6 +5,7 @@ using UnityEngine;
 using JetBrains.Annotations;
 
 public class Game : MonoBehaviour {
+    public static GameObject squirrell;
 	// ReSharper disable once MemberCanBePrivate.Global
 	// ReSharper disable once NotAccessedField.Global
 	public static Game game;
@@ -64,6 +65,7 @@ public class Game : MonoBehaviour {
 		Network.Instantiate(assets.squirrell, spawnPoint.position, Quaternion.identity /*should be spawnPoint.rotation, but squirrel stuff is bugged.*/, 0);
 		//Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0);
 	}
+	public static void SpawnSquirrell () {squirrell = Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0)as GameObject;}
 	public static bool showMenu;
     public static bool showLoadoutMenu;
 }

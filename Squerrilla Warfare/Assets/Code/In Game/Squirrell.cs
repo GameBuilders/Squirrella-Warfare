@@ -49,7 +49,35 @@ using JetBrains.Annotations;
 		this.currAmmo = val;
 	}
 
+    /* Weapon Code Begins */
+    float fireTimer;
+
+    public Transform GunHand;
+    private GameObject CurrentWeapon;
+
+    float FireDelay;
+
+    bool IsTraceFire;
+
+    float TraceDamage;
+    float TraceRange;
+
+    string ProjectileName;
+
+    void Equip(Weapon wep)
+    {
+        FireDelay = wep.getFireDelay();
+        CurrentWeapon = wep.ModelPrefab;
+    }
+
+    void Shoot()
+    {
+
+    }
+    /* Weapon Code Ends */
 	[UsedImplicitly] void Start () {
+        fireTimer = 0f;
+
 		rigidBody = GetComponent<Rigidbody>();
 		rigidBody.freezeRotation = true;
 		networkView = GetComponent<NetworkView>();
@@ -71,6 +99,18 @@ using JetBrains.Annotations;
 	[UsedImplicitly] void Update () {
 		if (networkView.isMine && !Game.showMenu)
 			InputMovement();
+
+        fireTimer += Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && fireTimer >= FireDelay && Time.timeScale != 0)
+        {
+            Shoot();
+        }
+
+        /*if (timer >= FireDelay * effectsDisplayTime)
+        {
+            DisableEffects();
+        }*/
 	}
 	
 	void InputMovement () {

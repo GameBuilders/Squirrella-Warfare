@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-    public Transform GunHand;
-    private Weapon CurrentWeapon;
+   /* public Transform GunHand;
+    private Transform CurrentWeapon;
 
     float FireDelay;
 
@@ -18,9 +18,6 @@ public class Player : MonoBehaviour {
     void Equip(Weapon wep)
     {
         FireDelay = wep.getFireDelay();
-        IsTraceFire = wep.getIsTraceFire();
-        TraceDamage = wep.getTraceDamage();
-        TraceRange = wep.getTraceRange();
-        ProjectileName = wep.getProjectileName();
-    }
+        CurrentWeapon = wep.ModelPrefab;
+    }*/
 }

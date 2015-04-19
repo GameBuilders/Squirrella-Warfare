@@ -5,14 +5,11 @@ public abstract class Weapon
 {
     public abstract float getFireDelay();
 
-    public abstract bool getIsTraceFire();
+    public abstract GameObject ModelPrefab {get;}
 
-    public abstract float getTraceDamage();
-    public abstract float getTraceRange();
+    public abstract void Fire();
 
-    public abstract string getProjectileName();
-
-    public abstract Transform getWeaponMesh();
+    //public abstract Transform getWeaponMesh();
 
     //[UsedImplicitly]
    // public Transform muzzle;
