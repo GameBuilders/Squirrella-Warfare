@@ -18,8 +18,6 @@ class ListDisplay <T> {
 		linesVisible = ((int) box.height ) / 20;
 		scrollerBox = new Rect(box.x + box.width - 20, box.y, 20, 20 * linesVisible);
 		presented = contents.ToList();
-		if (Input.GetAxis("Scroll Wheel") != 0)
-			sliderValue -= Input.GetAxis("Scroll Wheel");
 		sliderValue = GUI.VerticalScrollbar(scrollerBox, sliderValue, Mathf.Max(Mathf.Min(linesVisible, presented.Count), 1), 0f, Mathf.Max(1, presented.Count));
 		var unconstrainedScrollOffset = Mathf.RoundToInt(sliderValue);
 		scrollOffset = Mathf.Max(Mathf.Min(unconstrainedScrollOffset, presented.Count - linesVisible), 0);

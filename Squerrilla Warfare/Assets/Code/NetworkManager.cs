@@ -35,7 +35,9 @@ public class NetworkManager : MonoBehaviour {
 				StartServer("AsdfGame");
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RequestHosts();
-			hostsListDisplay.Draw(new Rect(200, 200, 50, 50));
+			var listDisplayRect = new Rect(400, 100, Screen.width - 400 - 50, Screen.height - 100 - 50);
+			GUI.Box(listDisplayRect, "");
+			hostsListDisplay.Draw(listDisplayRect);
 		}
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
