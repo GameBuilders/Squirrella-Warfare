@@ -12,6 +12,7 @@ public class Game : MonoBehaviour {
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static Assets assets;
 	[UsedImplicitly] public Transform spawnPointParent;
+    public GameObject SelfDeleteAudioSource;
 	[UsedImplicitly] void Start () {
 		game = this;
 		networkManager = GetComponent<NetworkManager>();
@@ -64,4 +65,11 @@ public class Game : MonoBehaviour {
 	public static bool showMenu;
 	public Squirrell mySquirrell;
 	public bool HasSquirrell {get {return mySquirrell != null;}}
+
+    public void playSound(Vector3 position, AudioClip[] sound)
+    {
+        var audioSource = (GameObject)Instantiate(SelfDeleteAudioSource, position, Quaternion.identity);
+        AudioSource soundClip = audioSource.GetComponent<AudioSource>();
+        soundClip.clip = sound.RandomElement();
+    }
 }
