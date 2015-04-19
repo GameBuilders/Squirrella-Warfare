@@ -15,7 +15,7 @@ public class PlayerShooting : MonoBehaviour
     LineRenderer gunLine;
     AudioSource gunAudio;
     Light gunLight;
-    float effectsDisplayTime = 0.2f;
+    //float effectsDisplayTime = 0.2f;
 
 
     void Awake ()
@@ -28,20 +28,7 @@ public class PlayerShooting : MonoBehaviour
     }
 
 
-    void Update ()
-    {
-        timer += Time.deltaTime;
-
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
-        {
-            Shoot ();
-        }
-
-        if(timer >= timeBetweenBullets * effectsDisplayTime)
-        {
-            DisableEffects ();
-        }
-    }
+    
 
 
     public void DisableEffects ()
