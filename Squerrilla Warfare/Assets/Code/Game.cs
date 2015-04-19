@@ -36,13 +36,13 @@ public class Game : MonoBehaviour {
 		        //First Loadout
 		        GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height));
 		        if (GUI.Button(new Rect(Screen.width/5, Screen.height/3, Screen.width/25, Screen.height/20), ">"))
-		            ; //Change Weapon 1
+						DoNothing(); //Change Weapon 1
 		        if (GUI.Button(new Rect(Screen.width/100, Screen.height/3, Screen.width/25, Screen.height/20), "<"))
-		            ; //Change Weapon 1
+						DoNothing(); //Change Weapon 1
 		        if (GUI.Button(new Rect(Screen.width/5, Screen.height/3*2, Screen.width/25, Screen.height/20), ">"))
-		            ; //Change Weapon 2
+						DoNothing(); //Change Weapon 2
 		        if (GUI.Button(new Rect(Screen.width/100, Screen.height/3*2, Screen.width/25, Screen.height/20), "<"))
-		            ; //Change Weapon 2
+						DoNothing(); //Change Weapon 2
 		        GUI.Box(new Rect(Screen.width/4, Screen.height/6, Screen.width/4, Screen.height/3), "Primary Weapon");
 		        //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/6 + Screen.height/12, Screen.width/4, Screen.height/3),
 		        //primaryDescription);

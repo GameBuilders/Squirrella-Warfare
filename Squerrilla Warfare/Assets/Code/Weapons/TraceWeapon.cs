@@ -6,8 +6,8 @@ public abstract class TraceWeapon : Weapon {
 	public override void Fire () {
 		MonoBehaviour.print("bang");
 		var shootRay = new Ray {
-			origin = Game.assets.squirrell.transform.eulerAngles,
-			direction = Game.assets.squirrell.transform.forward
+			origin = owner.gunHand.transform.position,
+			direction = owner.gunHand.transform.forward
 		};
 		// ReSharper disable once RedundantAssignment
 		var shootHit = new RaycastHit();
