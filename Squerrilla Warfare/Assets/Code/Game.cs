@@ -17,6 +17,7 @@ public class Game : MonoBehaviour {
 		networkManager = GetComponent<NetworkManager>();
 		assets = GetComponent<Assets>();
 	}
+
 	// ReSharper disable once InconsistentNaming
 	[UsedImplicitly] void OnGUI () {
 		Cursor.visible = showMenu;

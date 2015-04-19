@@ -7584,6 +7584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPointParent: {fileID: 1613862099}
+  mySquirrell: {fileID: 0}
 --- !u!114 &1695984869
 MonoBehaviour:
   m_ObjectHideFlags: 0
