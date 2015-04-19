@@ -13,59 +13,46 @@ public class Game : MonoBehaviour {
 	public static Assets assets;
 	[UsedImplicitly] public Transform spawnPointParent;
     public GameObject SelfDeleteAudioSource;
-    //Weapon types for UI
-    //private AssaultRifle aR;
-    //public string primaryDescription;
-    //public string primaryWeaponType;
+	[UsedImplicitly] void Start () {
+		game = this;
+		networkManager = GetComponent<NetworkManager>();
+		assets = GetComponent<Assets>();
+	}
 
-
-    [UsedImplicitly]
-    void Start()
-    {
-        game = this;
-        networkManager = GetComponent<NetworkManager>();
-        assets = GetComponent<Assets>();
-        //primaryDescription = aR.Description;
-        //primaryWeaponType = aR.WeaponName;
-    }
-
-    // ReSharper disable once InconsistentNaming
-    [UsedImplicitly]
-    void OnGUI()
-    {
-        Cursor.visible = showMenu;
-        Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
-        if (!NetworkManager.Connected)
-            showMenu = true;
-        if (showMenu)
-        {
-            networkManager.DrawMenu();
-            if (NetworkManager.Connected && !HasSquirrell)
-            {
-                //Draw Loadout UI
-                GUI.Box(new Rect(0, Screen.height / 6, Screen.width / 4, 2 * Screen.height / 3), "Loadout");
-                //First Loadout
-                GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height));
-                if (GUI.Button(new Rect(Screen.width / 5, Screen.height / 3, Screen.width / 25, Screen.height / 20), ">"))
-                    ; //Change Weapon 1
-                if (GUI.Button(new Rect(Screen.width / 100, Screen.height / 3, Screen.width / 25, Screen.height / 20), "<"))
-                    ; //Change Weapon 1
-                if (GUI.Button(new Rect(Screen.width / 5, Screen.height / 3 * 2, Screen.width / 25, Screen.height / 20), ">"))
-                    ; //Change Weapon 2
-                if (GUI.Button(new Rect(Screen.width / 100, Screen.height / 3 * 2, Screen.width / 25, Screen.height / 20), "<"))
-                    ; //Change Weapon 2
-                GUI.Box(new Rect(Screen.width / 4, Screen.height / 6, Screen.width / 4, Screen.height / 3), "Primary Weapon");
-                //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/6 + Screen.height/12, Screen.width/4, Screen.height/3),
-                //primaryDescription);
-                GUI.Box(new Rect(Screen.width / 4, Screen.height / 2, Screen.width / 4, Screen.height / 3), "Secondary Weapon");
-                //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/2 + Screen.height/12, Screen.width/4, Screen.height/3),
-                //primaryWeaponType);
-                GUI.EndGroup();
-                if (GUI.Button(new Rect(Screen.width / 3, Screen.height / 6 * 5, Screen.width / 3, Screen.height / 6), "Spawn"))
-                    FinishChoosingWeapons();
-            }
-        }
-    }
+	// ReSharper disable once InconsistentNaming
+	[UsedImplicitly] void OnGUI () {
+		Cursor.visible = showMenu;
+		Cursor.lockState = showMenu ? CursorLockMode.None : CursorLockMode.Locked;
+		if (!NetworkManager.Connected)
+			showMenu = true;
+		if (showMenu) {
+			networkManager.DrawMenu();
+		    if (NetworkManager.Connected && !HasSquirrell)
+		    {
+		        //Draw Loadout UI
+		        GUI.Box(new Rect(0, Screen.height/6, Screen.width/4, 2*Screen.height/3), "Loadout");
+		        //First Loadout
+		        GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height));
+		        if (GUI.Button(new Rect(Screen.width/5, Screen.height/3, Screen.width/25, Screen.height/20), ">"))
+		            ; //Change Weapon 1
+		        if (GUI.Button(new Rect(Screen.width/100, Screen.height/3, Screen.width/25, Screen.height/20), "<"))
+		            ; //Change Weapon 1
+		        if (GUI.Button(new Rect(Screen.width/5, Screen.height/3*2, Screen.width/25, Screen.height/20), ">"))
+		            ; //Change Weapon 2
+		        if (GUI.Button(new Rect(Screen.width/100, Screen.height/3*2, Screen.width/25, Screen.height/20), "<"))
+		            ; //Change Weapon 2
+		        GUI.Box(new Rect(Screen.width/4, Screen.height/6, Screen.width/4, Screen.height/3), "Primary Weapon");
+		        //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/6 + Screen.height/12, Screen.width/4, Screen.height/3),
+		        //primaryDescription);
+		        GUI.Box(new Rect(Screen.width/4, Screen.height/2, Screen.width/4, Screen.height/3), "Secondary Weapon");
+		        //GUI.Label(new Rect(Screen.width/4 + 2, Screen.height/2 + Screen.height/12, Screen.width/4, Screen.height/3),
+		        //primaryWeaponType);
+		        GUI.EndGroup();
+		        if (GUI.Button(new Rect(Screen.width/3, Screen.height/6*5, Screen.width/3, Screen.height/6), "Spawn"))
+		            FinishChoosingWeapons();
+		    }
+		}
+	}
 	static void FinishChoosingWeapons () {
 		showMenu = false;
 		SpawnMySquirrell();
