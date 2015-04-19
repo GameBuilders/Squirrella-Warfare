@@ -1,44 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
-public abstract class TraceWeapon : Weapon
-{
-    Ray shootRay;
-    RaycastHit shootHit;
-    //int shootableMask;
-
-    public abstract int getTraceDamage();
-    public abstract float getTraceRange();
-
-    public override void Fire()
-    {
-        //shootRay.origin = Game.squirrell.transform.position;
-        //shootRay.direction = Game.squirrell.transform.rotation.eulerAngles;
-        //gunAudio.Play();
-
-        //gunLight.enabled = true;
-
-        //gunParticles.Stop();
-        //gunParticles.Play();
-
-        shootRay.origin = Game.assets.squirrell.transform.eulerAngles;
-        shootRay.direction = Game.assets.squirrell.transform.forward;
-
-        //gunLine.enabled = true;
-        //gunLine.SetPosition(GetComponent(MuzzleTag).transform, GetComponent(MuzzleTag).position);
-
-
-        if (Physics.Raycast(shootRay, out shootHit, getTraceRange(), LayerMask.GetMask("Everything")))
-        {
-            Squirrell enemyPlayer = shootHit.collider.GetComponent<Squirrell>();
-            
-            enemyPlayer.damage(getTraceDamage());
-
-            //gunLine.SetPosition(1, shootHit.point);
-        }
-        else
-        {
-            //gunLine.SetPosition(1, shootRay.origin + shootRay.direction * TraceRange);
-        }
-    }
+public abstract class TraceWeapon : Weapon {
+	public abstract int TraceDamage {get;}
+	public abstract float TraceRange {get;}
+	public override void Fire () {
+		var shootRay = new Ray {
+			origin = Game.assets.squirrell.transform.eulerAngles,
+			direction = Game.assets.squirrell.transform.forward
+		};
+		// ReSharper disable once RedundantAssignment
+		var shootHit = new RaycastHit();
+		if (Physics.Raycast(shootRay, out shootHit, TraceRange, LayerMask.GetMask("Everything"))) {
+			var enemyPlayer = shootHit.collider.GetComponent<Squirrell>();
+			if (enemyPlayer != null)
+				enemyPlayer.Damage(TraceDamage);
+		}
+	}
 }
