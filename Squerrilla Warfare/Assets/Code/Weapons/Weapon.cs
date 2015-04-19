@@ -8,4 +8,7 @@ public abstract class Weapon {
 	public abstract int ClipSize {get;}
 	public abstract GameObject ModelPrefab {get;}
 	public abstract void Fire ();
+
+    public int totalAmmo;
+    public int ammoInClip;
 }

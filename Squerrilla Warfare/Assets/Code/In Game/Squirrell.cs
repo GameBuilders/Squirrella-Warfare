@@ -7,8 +7,6 @@ using UnityEngine;
 	public const float jumpHeight = 4f;
 	public const float climbSpeed = 2f;
 	public bool canJump = true;
-	int totalAmmo;
-	int ammoInClip;
 	HashSet<Collider> currentlyColliding;
 	/* Weapon Code Ends */
 	Collider currentTree;
@@ -21,6 +19,21 @@ using UnityEngine;
 				Die();
 		}
 	}
+
+    Weapon weapon1;
+    Weapon Weapon1 {
+        get { return weapon1; }
+        set {weapon1 = value; }
+    }
+    Weapon weapon2;
+    Weapon Weapon2 {
+        get { return weapon2; }
+        set { weapon2 = value; }
+    }
+
+    int MaxAmmo { get { return currentWeapon.MaxAmmo; } }
+    int MaxClip { get { return currentWeapon.ClipSize; } }
+
 	float FireDelay {get {return currentWeapon.FireDelay;}}
 	/* Weapon Code Begins */
 	float fireTimer;
@@ -28,28 +41,39 @@ using UnityEngine;
 	// new NetworkView networkView;
 	//private float camRayLength = 100f;
 	float h, v;
-	int MaxAmmo {get {return currentWeapon.MaxAmmo;}}
-	int MaxClip {get {return currentWeapon.ClipSize;}}
 	const int maxHealth = 100; //max health. Change as needed
 	Vector3 movement;
 	new NetworkView networkView;
 	Rigidbody playerRigidbody;
 	Rigidbody rigidBody;
-	GameObject weaponPrefab = null;
+	GameObject weaponModel = null;
 	//getters and setters for health and ammo
+<<<<<<< HEAD
 	public int Ammo {get {return totalAmmo;}}
 	public void Damage (int amount) {CurrentHealth -= amount;}
 	public void Damage (float amount) {Damage(Mathf.RoundToInt(amount));}
 	public void UseAmmo () {ammoInClip -= 1;}
+=======
+	public int Ammo {
+        get {return CurrentWeapon.totalAmmo;}
+        set { CurrentWeapon.totalAmmo = value; }
+    }
+    public int AmmoInClip { 
+        get { return CurrentWeapon.ammoInClip; }
+        set { CurrentWeapon.ammoInClip = value; }
+    }
+	public void Damage (int val) {CurrentHealth -= val;}
+	public void UseAmmo () {CurrentWeapon.ammoInClip -= 1;}
+>>>>>>> 0c2813f341456c002bdbdb08e47df3ea793717eb
 	Weapon currentWeapon;
 	void Die () {}//todo
 	public Weapon CurrentWeapon {get {return currentWeapon;}
 		set {
 			currentWeapon = value;
-			if (weaponPrefab != null) //Destroy our previous prefab if it exists
-				Network.Destroy(weaponPrefab);
-			weaponPrefab = gameObject.InstantiateChild(value.ModelPrefab);
-			weaponPrefab = value.ModelPrefab;
+			if (weaponModel != null) //Destroy our previous prefab if it exists
+				Network.Destroy(weaponModel);
+			weaponModel = gameObject.InstantiateChild(value.ModelPrefab);
+			weaponModel = value.ModelPrefab;
 		}
 	}
 	void Shoot () {
@@ -58,16 +82,16 @@ using UnityEngine;
 		Debug.Log(CurrentHealth);
 		currentWeapon.Fire();
 	}
-	bool CanFullyReload {get {return Ammo >= MaxClip - ammoInClip;}}
+	bool CanFullyReload {get {return Ammo >= MaxClip - AmmoInClip;}}
 	void TryToReload () {
 		if (CanFullyReload) {
-			totalAmmo = Ammo - MaxClip - ammoInClip;
-			ammoInClip =(MaxClip);
+			Ammo = Ammo - MaxClip - AmmoInClip;
+			AmmoInClip =(MaxClip);
 			fireTimer = -currentWeapon.ReloadTime + currentWeapon.FireDelay;
 		}
 		else if (Ammo > 0) {
-			ammoInClip =(ammoInClip + Ammo);
-			totalAmmo = 0;
+			AmmoInClip =(AmmoInClip + Ammo);
+			Ammo = 0;
 			fireTimer = currentWeapon.FireDelay - currentWeapon.ReloadTime;
 		}
 	}
@@ -75,8 +99,8 @@ using UnityEngine;
 		CurrentWeapon = new AssaultRifle();
 		if (MaxAmmo == 0)//Prevents warning. Remove when implemented!
 			fireTimer = 0;
-		totalAmmo = MaxAmmo;
-		ammoInClip = MaxClip;
+		Ammo = MaxAmmo;
+		AmmoInClip = MaxClip;
 		fireTimer = 0f;
 		CurrentHealth = maxHealth;
 		rigidBody = GetComponent<Rigidbody>();
@@ -97,13 +121,17 @@ using UnityEngine;
 		if (networkView.isMine && !Game.showMenu)
 			InputMovement();
 		fireTimer += Time.deltaTime;
-		if (Input.GetButton("Fire1"))
-			TryToShoot();
-		else if (Input.GetButton("Reload") && ammoInClip < MaxClip)
-			TryToReload();
+        if (Input.GetButton("Fire1"))
+            TryToShoot();
+        else if (Input.GetButton("Reload") && AmmoInClip < MaxClip)
+            TryToReload();
+        else if (Input.GetButton("Slot1") && CurrentWeapon != Weapon1)
+            CurrentWeapon = Weapon1;
+        else if (Input.GetButton("Slot2") && CurrentWeapon != Weapon2)
+            CurrentWeapon = Weapon2;
 	}
 	void TryToShoot () {
-		if (ammoInClip == 0)
+		if (AmmoInClip == 0)
 			TryToReload();
 		else if (fireTimer >= FireDelay)
 			Shoot();
