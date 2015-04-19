@@ -21,6 +21,7 @@ public class Game : MonoBehaviour {
 	    Instantiate(assets.camera);
 	    Instantiate(assets.quad);
 	    Instantiate(assets.light);
+		Instantiate(assets.uiCanvas);
 	}
 	[UsedImplicitly] void Update () {
 		//if (Input.GetKeyDown("1"))
