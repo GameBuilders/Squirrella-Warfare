@@ -59,12 +59,12 @@ public class Game : MonoBehaviour {
 	static IEnumerable<Transform> SpawnPoints { get { return game.spawnPointParent.Cast<Transform>(); } }
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static IEnumerable<Squirrell> Squirrells {get {return FindObjectsOfType<Squirrell>();}}
-	static void SpawnSquirrell () {SpawnSquirrellAt(NextSpawnPoint);}
+	//static void SpawnSquirrell () {SpawnSquirrellAt(NextSpawnPoint);}
 	static Transform NextSpawnPoint {get {return Squirrells.Any() ? SpawnPoints.ArgMax(candidate => Squirrells.Min(squirrell => (candidate.position - squirrell.transform.position).magnitude)) : SpawnPoints.RandomElement();}}
-	static void SpawnSquirrellAt (Transform spawnPoint) {
-		Network.Instantiate(assets.squirrell, spawnPoint.position, Quaternion.identity /*should be spawnPoint.rotation, but squirrel stuff is bugged.*/, 0);
-		//Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0);
-	}
+	/*static void SpawnSquirrellAt (Transform spawnPoint) {
+		Network.Instantiate(assets.squirrell, spawnPoint.position, Quaternion.identity /*should be spawnPoint.rotation, but squirrel stuff is bugged.*//*, 0);
+		//Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0);*/
+	//}
 	public static void SpawnSquirrell () {squirrell = Network.Instantiate(assets.squirrell, Vector3.zero, Quaternion.identity, 0)as GameObject;}
 	public static bool showMenu;
     public static bool showLoadoutMenu;

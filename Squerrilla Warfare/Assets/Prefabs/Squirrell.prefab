@@ -16,7 +16,7 @@ GameObject:
   - 143: {fileID: 14334198}
   - 148: {fileID: 14882810}
   m_Layer: 0
-  m_Name: squirrell
+  m_Name: Squirrell
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3716ca06869bff48b3cb4fc24e52da6, type: 3}
   m_Name: Squirrell
   m_EditorClassIdentifier: 
-  canJump: 1
+  GunHand: {fileID: 0}
 --- !u!143 &14334198
 CharacterController:
   m_ObjectHideFlags: 1
