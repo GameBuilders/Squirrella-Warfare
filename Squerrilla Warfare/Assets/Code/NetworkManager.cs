@@ -8,8 +8,7 @@ public class NetworkManager : MonoBehaviour {
 		Network.InitializeServer(4, 12, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(gameTypeName, lobbyName);
 	}
-	[UsedImplicitly]
-	void OnServerInitialized () {
+	[UsedImplicitly] void OnServerInitialized () {
 		//Debug.Log("Server Initialized.");
 		Game.JoinedGame();
 	}
@@ -17,8 +16,7 @@ public class NetworkManager : MonoBehaviour {
 	public static bool Connected { get { return Network.isClient || Network.isServer; } }
 	ListDisplay<HostData> hostsListDisplay = new ListDisplay<HostData>(new List<HostData>());
 	void RequestHosts () { MasterServer.RequestHostList(gameTypeName); }
-	[UsedImplicitly]
-	void OnMasterServerEvent (MasterServerEvent masterServerEvent) {
+	[UsedImplicitly] void OnMasterServerEvent (MasterServerEvent masterServerEvent) {
 		if (masterServerEvent == MasterServerEvent.HostListReceived)
 			Debug.Log("Host List Received");
 		hostsListDisplay.contents = MasterServer.PollHostList().ToList();
@@ -42,11 +40,9 @@ public class NetworkManager : MonoBehaviour {
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
 	}
-	[UsedImplicitly]
-	void OnPlayerDisconnected (NetworkPlayer player) {
+	[UsedImplicitly] void OnPlayerDisconnected (NetworkPlayer player) {
 	}
-	[UsedImplicitly]
-	void Update () {
+	[UsedImplicitly] void Update () {
 		if (Input.GetKeyDown("escape"))
 			Game.showMenu = !Game.showMenu;
 	}
@@ -54,15 +50,13 @@ public class NetworkManager : MonoBehaviour {
 		Network.Disconnect();
 		FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
 	}
-	[UsedImplicitly]
-	void OnConnectedToServer () {
+	[UsedImplicitly] void OnConnectedToServer () {
 		Debug.Log("Server Joined");
 		Game.JoinedGame();
 		joining = false;
 	}
 	bool joining = false;
-	[UsedImplicitly]
-	void Start () {
+	[UsedImplicitly] void Start () {
 		hostsListDisplay.OnChoose(PlayerHitJoin);
 	}
 }

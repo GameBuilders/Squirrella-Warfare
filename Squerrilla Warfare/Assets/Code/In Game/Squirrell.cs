@@ -131,9 +131,9 @@ using JetBrains.Annotations;
 
 	private Rigidbody playerRigidbody;
 	private int floorMask;
-    private Rigidbody rigidBody;
-    public bool canJump = true;
-    private NetworkView networkView;
+	private Rigidbody rigidBody;
+	public bool canJump = true;
+	new NetworkView networkView;
 	// new NetworkView networkView;
 	//private float camRayLength = 100f;
 
