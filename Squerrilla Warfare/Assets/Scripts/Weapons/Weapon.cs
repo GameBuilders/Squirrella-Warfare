@@ -4,8 +4,12 @@ using System.Collections;
 public abstract class Weapon
 {
     public abstract float getFireDelay();
+    public abstract float getReloadTime();
 
-    public abstract GameObject ModelPrefab {get;}
+    public abstract int getMaxAmmo();
+    public abstract int getClipSize();
+
+    public abstract GameObject getModelPrefab();
 
     public abstract void Fire();
 

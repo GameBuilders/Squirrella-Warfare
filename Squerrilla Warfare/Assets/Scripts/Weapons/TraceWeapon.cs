@@ -7,7 +7,7 @@ public abstract class TraceWeapon : Weapon
     RaycastHit shootHit;
     //int shootableMask;
 
-    public abstract float getTraceDamage();
+    public abstract int getTraceDamage();
     public abstract float getTraceRange();
 
     public abstract string getProjectileName();
@@ -15,7 +15,7 @@ public abstract class TraceWeapon : Weapon
     public override void Fire()
     {
         shootRay.origin = Game.squirrell.transform.position;
-        shootRay.direction = Game.squirrell.transform.rotation.ToEulerAngles();
+        shootRay.direction = Game.squirrell.transform.rotation.eulerAngles;
         //gunAudio.Play();
 
         //gunLight.enabled = true;
@@ -34,7 +34,7 @@ public abstract class TraceWeapon : Weapon
         {
             Squirrell enemyPlayer = shootHit.collider.GetComponent<Squirrell>();
             
-            //enemyPlayer.damage(getTraceDamage());
+            enemyPlayer.damage(getTraceDamage());
 
             //gunLine.SetPosition(1, shootHit.point);
         }

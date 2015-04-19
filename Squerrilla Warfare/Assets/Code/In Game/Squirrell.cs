@@ -26,34 +26,66 @@ using JetBrains.Annotations;
 	private int currHealth;			//current health
 	private int maxAmmo;			//max ammo. Change as needed. How does this change with weapon?
 	private int currAmmo;			//current ammo
+    private int maxClip;
+    private int currClip;
+
+    GameObject weaponPrefab = null;
 
 	//getters and setters for health and ammo
 	public int getHealth()
 	{
-		return(this.currHealth);
+		return currHealth;
 	}
 	public int getAmmo()
 	{
-		return(this.currAmmo);
+		return currAmmo;
 	}
+    public int getMaxAmmo()
+    {
+        return maxAmmo;
+    }
+    public int getMaxClip()
+    {
+        return maxClip;
+    }
+    public int getClip()
+    {
+        return currClip;
+    }
 	public void setHealth(int val)
 	{
-		this.currHealth = val;
+		currHealth = val;
 	}
+    public void damage(int val)
+    {
+        currHealth -= val;
+    }
 	public void setMaxAmmo(int val)
 	{
-		this.maxAmmo = val;
+		maxAmmo = val;
 	}
 	public void setAmmo(int val)
 	{
-		this.currAmmo = val;
+		currAmmo = val;
 	}
+    public void setMaxClip(int val)
+    {
+        maxClip = val;
+    }
+    public void setClip(int val)
+    {
+        currClip = val;
+    }
+    public void useAmmo()
+    {
+        currClip -= 1;
+    }
 
     /* Weapon Code Begins */
     float fireTimer;
 
     public Transform GunHand;
-    private GameObject CurrentWeapon;
+    private Weapon CurrentWeapon;
 
     float FireDelay;
 
@@ -67,16 +99,57 @@ using JetBrains.Annotations;
     void Equip(Weapon wep)
     {
         FireDelay = wep.getFireDelay();
-        CurrentWeapon = wep.ModelPrefab;
+        CurrentWeapon = wep;
+        setMaxAmmo(wep.getMaxAmmo());
+        setMaxClip(wep.getClipSize());
+
+        if (weaponPrefab != null) //Destroy our previous prefab if it exists
+            Network.Destroy(weaponPrefab);
+
+        weaponPrefab = Extensions.InstantiateChild(this.gameObject, wep.getModelPrefab()) as GameObject;
+
+        weaponPrefab = wep.getModelPrefab();
     }
 
     void Shoot()
     {
+        fireTimer = 0f;
+        useAmmo();
+        Debug.Log(getClip());
+        CurrentWeapon.Fire();
+    }
 
+    void Reload()
+    {
+        if (getAmmo() >= getMaxClip() - getClip()) //Player can fully reload
+        {
+            setAmmo(getAmmo() - (getMaxClip() - getClip()));
+            setClip(getMaxClip());
+
+            fireTimer = -CurrentWeapon.getReloadTime() + CurrentWeapon.getFireDelay();
+        }
+        else if(getAmmo() > 0) //Player can partially reload
+        {
+            setClip(getClip() + getAmmo());
+            setAmmo(0);
+
+            fireTimer = -CurrentWeapon.getReloadTime() + CurrentWeapon.getFireDelay();
+        }
+        //Player can't reload? Sucks to suck.
     }
     /* Weapon Code Ends */
+
 	[UsedImplicitly] void Start () {
+        Equip(new AssaultRifle());
+        if (maxAmmo == 0) //Prevents warning. Remove when implemented!
+        {
+            fireTimer = 0; 
+        }
+
+        setAmmo(getMaxAmmo());
+        setClip(getMaxClip());
         fireTimer = 0f;
+        currHealth = maxHealth;
 
 		rigidBody = GetComponent<Rigidbody>();
 		rigidBody.freezeRotation = true;
@@ -102,10 +175,12 @@ using JetBrains.Annotations;
 
         fireTimer += Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && fireTimer >= FireDelay && Time.timeScale != 0)
+        if (Input.GetButton("Fire1") && fireTimer >= FireDelay && Time.timeScale != 0 && getClip() > 0)
         {
             Shoot();
         }
+        else if (Input.GetButton("Reload") && getClip() < getMaxClip())
+            Reload();
 
         /*if (timer >= FireDelay * effectsDisplayTime)
         {

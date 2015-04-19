@@ -26,10 +26,12 @@ public static partial class Extensions {
 	public static bool HasComponent<T> (this Component c) where T : Component {return c.GetComponent<T>() != null;}//constraints necessary because they cause the "!=" operator to be Unity's overloaded crap which handles their fake null.
 	public static bool HasComponent<T> (this GameObject g) where T : Component {return g.GetComponent<T>() != null;}
 	// ReSharper disable once RedundantNameQualifier
+    [RPC]
 	public static GameObject InstantiateChild (this GameObject parent, UnityEngine.Object original, Vector3 offset = default(Vector3)) {
 		return InstantiateChild(parent, original, offset, Quaternion.identity);
 	}
 	// ReSharper disable once RedundantNameQualifier
+    [RPC]
 	public static GameObject InstantiateChild (this GameObject parent, UnityEngine.Object original, Vector3 offset, Quaternion relativeRotation) {
 		var instantiated = MonoBehaviour.Instantiate(original, parent.transform.position + offset, parent.transform.rotation * relativeRotation);
 		var transform = instantiated as Transform ?? ((GameObject) instantiated).transform;
