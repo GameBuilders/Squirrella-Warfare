@@ -35,7 +35,7 @@ using UnityEngine;
 	float h, v;
 	const int maxHealth = 100; //max health. Change as needed
 	Vector3 movement;
-	new NetworkView networkView;
+	new NetworkView networkView;//
 	Rigidbody playerRigidbody;
 	Rigidbody rigidBody;
 	GameObject weaponModel = null;

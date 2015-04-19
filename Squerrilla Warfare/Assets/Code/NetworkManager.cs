@@ -59,7 +59,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 	bool joining = false;
 	[UsedImplicitly] void Start () {
-		hostsListDisplay.OnChoose(PlayerHitJoin).SetPrinter(hostData => hostData.gameName);
+		hostsListDisplay.OnChoose(PlayerHitJoin).SetPrinter(hostData => string.Join(".", hostData.ip) + ": " + hostData.gameName);
 		RequestHosts();
 	}
 }
