@@ -43,15 +43,21 @@ public class NetworkManager : MonoBehaviour {
 		else if (GUI.Button(new Rect(10, 10, 100, 25), "Disconnect"))
 			Disconnect();
 	}
+	[UsedImplicitly] void OnDisconnectedFromServer (NetworkDisconnection info) {DestroyNetworkObjects();}
 	[UsedImplicitly] void OnPlayerDisconnected (NetworkPlayer player) {
+		DestroyNetworkObjects();
 	}
 	[UsedImplicitly] void Update () {
 		if (Input.GetKeyDown("escape"))
 			Game.showMenu = !Game.showMenu;
 	}
-	void Disconnect () {
-		Network.Disconnect();
+	void DestroyNetworkObjects () {
+		Network.DestroyPlayerObjects(Network.player);
 		FindObjectsOfType<NetworkView>().Select(networkView => networkView.gameObject).ForEach(Destroy);
+	}
+	public void Disconnect () {
+		Network.Disconnect();
+		DestroyNetworkObjects();
 	}
 	[UsedImplicitly] void OnConnectedToServer () {
 		Game.JoinedGame();
@@ -59,7 +65,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 	bool joining = false;
 	[UsedImplicitly] void Start () {
-		hostsListDisplay.OnChoose(PlayerHitJoin).SetPrinter(hostData => hostData.gameName);
+		hostsListDisplay.OnChoose(PlayerHitJoin).SetPrinter(hostData => string.Join(".", hostData.ip) + ": " + hostData.gameName);
 		RequestHosts();
 	}
 }

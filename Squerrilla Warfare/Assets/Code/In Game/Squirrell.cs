@@ -10,8 +10,8 @@ using UnityEngine;
 	HashSet<Collider> currentlyColliding;
 	/* Weapon Code Ends */
 	Collider currentTree;
-	int currentHealth;
-	int CurrentHealth {
+	float currentHealth;
+	float CurrentHealth {
 		get {return currentHealth;}
 		set {
 			currentHealth = value;
@@ -20,8 +20,32 @@ using UnityEngine;
 		}
 	}
 	// ReSharper disable MemberCanBePrivate.Global
-	public Weapon weapon1;
-	public Weapon weapon2;
+	public Weapon MainWeapon {
+		get {return mainWeapon;}
+		set {
+			OnRelinquishWeapon(mainWeapon);
+			mainWeapon = value;
+			OnClaimWeapon(mainWeapon);
+		}
+	}
+	Weapon mainWeapon;
+	public Weapon SecondaryWeapon {
+		get {return secondaryWeapon;}
+		set {
+			OnRelinquishWeapon(secondaryWeapon);
+			secondaryWeapon = value;
+			OnClaimWeapon(secondaryWeapon);
+		}
+	}
+	Weapon secondaryWeapon;
+	void OnRelinquishWeapon (Weapon toRelinquish) {
+		if (toRelinquish != null)
+			toRelinquish.owner = null;
+	}
+	void OnClaimWeapon (Weapon toClaim) {
+		if (toClaim != null)
+			toClaim.owner = this;
+	}
 	// ReSharper restore MemberCanBePrivate.Global
 	int MaxAmmo {get {return currentWeapon.MaxAmmo;}}
     int MaxClip {get {return currentWeapon.ClipSize;}}
@@ -35,14 +59,15 @@ using UnityEngine;
 	float h, v;
 	const int maxHealth = 100; //max health. Change as needed
 	Vector3 movement;
-	new NetworkView networkView;
+	public new NetworkView networkView;
 	Rigidbody playerRigidbody;
 	Rigidbody rigidBody;
 	GameObject weaponModel = null;
 	//getters and setters for health and ammo
-	public void Damage (int amount) {CurrentHealth -= amount;}
-	public void Damage (float amount) {Damage(Mathf.RoundToInt(amount));}
-    private Animator anim;
+	[RPC] public void Damage (float amount) {
+		print("I have been damaged.");
+		CurrentHealth -= amount;
+	}
 	int Ammo {
         get {return CurrentWeapon.totalAmmo;}
         set {CurrentWeapon.totalAmmo = value;}
@@ -53,7 +78,10 @@ using UnityEngine;
     }
 	void UseAmmo () {CurrentWeapon.ammoInClip -= 1;}
 	Weapon currentWeapon;
-	void Die () {}//todo
+	void Die () {
+		MonoBehaviour.print("What a world.");
+		Game.OnDied();
+	}//todo
 	// ReSharper disable once MemberCanBePrivate.Global
 	public Weapon CurrentWeapon {get {return currentWeapon;}
 		set {
@@ -82,9 +110,12 @@ using UnityEngine;
 			Ammo = 0;
 			fireTimer = currentWeapon.FireDelay - currentWeapon.ReloadTime;
 		}
-	}
+	}//
+	Animator anim;
 	[UsedImplicitly] void Start () {
-		CurrentWeapon = new AssaultRifle();
+		MainWeapon = new AssaultRifle();
+		SecondaryWeapon = new AssaultRifle();
+		CurrentWeapon = MainWeapon;
 		if (MaxAmmo == 0)//Prevents warning. Remove when implemented!
 			fireTimer = 0;
 		Ammo = MaxAmmo;
@@ -114,10 +145,10 @@ using UnityEngine;
             TryToShoot();
         else if (Input.GetButton("Reload") && AmmoInClip < MaxClip)
             TryToReload();
-        else if (Input.GetButton("Slot1") && CurrentWeapon != weapon1)
-            CurrentWeapon = weapon1;
-        else if (Input.GetButton("Slot2") && CurrentWeapon != weapon2)
-            CurrentWeapon = weapon2;
+        else if (Input.GetButton("Slot1") && CurrentWeapon != MainWeapon)
+            CurrentWeapon = MainWeapon;
+        else if (Input.GetButton("Slot2") && CurrentWeapon != SecondaryWeapon)
+            CurrentWeapon = SecondaryWeapon;
 	}
 	void TryToShoot () {
 		if (AmmoInClip == 0)
